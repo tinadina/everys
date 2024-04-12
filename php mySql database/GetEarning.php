@@ -1,0 +1,28 @@
+<?php
+
+include 'db_connect.php';
+
+if (mysqli_connect_errno($con))
+{
+   echo '{"query_result":"ERROR"}';
+}
+$fund = $_GET['fund'];
+$sql = "SELECT earning FROM funds WHERE fund='$fund'";
+	
+	//getting images 
+	$result = mysqli_query($con,$sql);
+	//response array 
+	$response = array(); 
+	//$response['error'] = false; 
+	$response/*['users'] */= array(); 
+	
+	//traversing through all the rows 
+	while($row = mysqli_fetch_array($result) ){
+		$temp = array(); 
+		
+		$temp['earning']=$row['earning'];
+	
+		array_push($response/*['users']*/,$temp);
+	}
+	//displaying the response 
+	echo json_encode($response);
